@@ -7,11 +7,13 @@ class MoviesController < ApplicationController
   end
 
   def index
-    @movies = Movie.all
+    @sort = params[:sort]
+    @movies = Movie.find(:all, :order => @sort)
   end
 
   def new
     # default: render 'new' template
+    @hilite = "blue";
   end
 
   def create
