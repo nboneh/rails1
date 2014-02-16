@@ -12,6 +12,7 @@ class MoviesController < ApplicationController
     @ratingHash = params[:ratings]
     
     if @sort == nil && @ratingHash == nil && !session.empty?
+      flash.keep
       redirect_to movies_path(:sort => session[:sort], 
           :ratings => session[:ratings])
     else
