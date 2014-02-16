@@ -7,13 +7,28 @@ class MoviesController < ApplicationController
   end
 
   def index
+    @all_ratings = Movie.ratings
     @sort = params[:sort]
-    @movies = Movie.find(:all, :order => @sort)
+    @ratingHash = params[:ratings] 
+    
+    if @ratingHash != nil
+       @ratings = @ratingHash.keys
+   else
+      @ratings = @all_ratings
+   end
+
+    @movies = Movie.where(:rating => @ratings)
+    
+    ids = []
+    @movies.each do |movie|
+       ids.push(movie.id)
+    end
+
+    @movies = Movie.find(ids, :order => @sort)
   end
 
   def new
     # default: render 'new' template
-    @hilite = "blue";
   end
 
   def create
