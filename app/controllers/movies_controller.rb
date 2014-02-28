@@ -27,15 +27,9 @@ class MoviesController < ApplicationController
    else
       @ratings = @all_ratings
    end
-
-    @movies = Movie.where(:rating => @ratings)
     
-    ids = []
-    @movies.each do |movie|
-       ids.push(movie.id)
-    end
-
-    @movies = Movie.find(ids, :order => @sort)
+  @movies = Movie.find_all_by_rating(@ratings, :order => @sort)
+  
   end
 
   def new
